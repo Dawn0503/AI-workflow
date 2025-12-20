@@ -1,0 +1,168 @@
+// ==========================================
+// Prisma 数据库模式文件
+// 文件作用：定义应用程序的数据库结构和关系
+// ==========================================
+
+// 生成 Prisma 客户端配置
+// provider: 指定使用 JavaScript/TypeScript 客户端
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 数据源配置
+// provider: 使用 SQLite 数据库（轻量级，适合开发）
+// url: 从环境变量读取数据库连接字符串
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// 用户模型 (User)
+// 作用：存储系统用户信息（暂未使用，预留）
+// ==========================================
+model User {
+  id        String   @id @default(cuid())  // 唯一标识符，使用 CUID 格式
+  email     String   @unique                // 用户邮箱，唯一索引
+  name      String?                         // 用户名（可选）
+  createdAt DateTime @default(now())        // 创建时间，默认为当前时间
+  updatedAt DateTime @updatedAt             // 更新时间，自动维护
+}
+
+// ==========================================
+// 工作流模型 (Workflow)
+// 作用：存储 AI 工作流的基本信息
+// ==========================================
+/// Workflow definitions for AI workflow engine
+model Workflow {
+  id          String         @id @default(cuid())  // 工作流唯一标识符
+  name        String                               // 工作流名称
+  description String?                              // 工作流描述（可选）
+  createdAt   DateTime       @default(now())       // 创建时间
+  updatedAt   DateTime       @updatedAt            // 最后更新时间
+
+  // 关联关系
+  nodes       WorkflowNode[]  // 工作流包含的所有节点
+  edges       WorkflowEdge[]  // 工作流包含的所有连接线
+  runs        Run[]           // 工作流的所有运行记录
+}
+
+// ==========================================
+// 工作流节点模型 (WorkflowNode)
+// 作用：存储工作流中的每个处理节点
+// 节点类型示例：input（输入）、openai.chat（AI对话）、map.set（设置变量）、http.request（HTTP请求）
+// ==========================================
+model WorkflowNode {
+  id          String    @id @default(cuid())  // 节点唯一标识符
+  workflowId  String                           // 所属工作流的ID（外键）
+  type        String                           // 节点类型，如 "input", "openai.chat", "map.set", "http.request"
+  label       String?                          // 节点显示名称（可选）
+  positionX   Float     @default(0)           // 节点在画布上的 X 坐标
+  positionY   Float     @default(0)           // 节点在画布上的 Y 坐标
+  config      Json                             // 节点配置（JSON格式，不同类型节点配置不同）
+
+  // 关联关系
+  workflow    Workflow  @relation(fields: [workflowId], references: [id], onDelete: Cascade)  // 所属工作流，级联删除
+  incoming    WorkflowEdge[] @relation("EdgeToTarget")    // 指向此节点的所有连接线
+  outgoing    WorkflowEdge[] @relation("EdgeFromSource")  // 从此节点出发的所有连接线
+  steps       Step[]                                       // 此节点的所有执行步骤记录
+
+  // 索引：加速按工作流ID查询
+  @@index([workflowId])
+}
+
+// ==========================================
+// 工作流连接线模型 (WorkflowEdge)
+// 作用：定义节点之间的连接关系和数据流向
+// ==========================================
+model WorkflowEdge {
+  id           String       @id @default(cuid())  // 连接线唯一标识符
+  workflowId   String                             // 所属工作流的ID（外键）
+  sourceNodeId String                             // 起始节点ID（从哪个节点出发）
+  targetNodeId String                             // 目标节点ID（到哪个节点）
+  label        String?                            // 连接线标签（可选）
+  condition    Json?                              // 条件表达式（可选，用于条件分支，暂未实现）
+
+  // 关联关系
+  workflow     Workflow     @relation(fields: [workflowId], references: [id], onDelete: Cascade)                    // 所属工作流
+  sourceNode   WorkflowNode @relation("EdgeFromSource", fields: [sourceNodeId], references: [id], onDelete: Cascade) // 起始节点
+  targetNode   WorkflowNode @relation("EdgeToTarget", fields: [targetNodeId], references: [id], onDelete: Cascade)   // 目标节点
+
+  // 索引：加速查询
+  @@index([workflowId])     // 按工作流ID查询
+  @@index([sourceNodeId])   // 按起始节点查询
+  @@index([targetNodeId])   // 按目标节点查询
+}
+
+// ==========================================
+// 运行状态枚举 (RunStatus)
+// 作用：定义工作流运行的可能状态
+// ==========================================
+enum RunStatus {
+  PENDING   // 待执行
+  RUNNING   // 执行中
+  SUCCEEDED // 执行成功
+  FAILED    // 执行失败
+}
+
+// ==========================================
+// 运行记录模型 (Run)
+// 作用：记录工作流的每次执行情况
+// ==========================================
+model Run {
+  id          String     @id @default(cuid())      // 运行记录唯一标识符
+  workflowId  String                               // 执行的工作流ID（外键）
+  status      RunStatus  @default(PENDING)         // 当前状态（默认为待执行）
+  startedAt   DateTime?                            // 开始执行时间（可选）
+  finishedAt  DateTime?                            // 执行结束时间（可选）
+  input       Json?                                // 输入数据（JSON格式）
+  context     Json?                                // 执行上下文（累积的所有数据）
+  error       String?                              // 错误信息（如果执行失败）
+
+  // 关联关系
+  workflow    Workflow   @relation(fields: [workflowId], references: [id], onDelete: Cascade)  // 所属工作流
+  steps       Step[]                                                                             // 所有执行步骤
+
+  // 时间戳
+  createdAt   DateTime   @default(now())     // 记录创建时间
+  updatedAt   DateTime   @updatedAt          // 记录更新时间
+
+  // 索引：加速查询
+  @@index([workflowId])  // 按工作流ID查询
+  @@index([status])      // 按状态查询
+}
+
+// ==========================================
+// 步骤状态枚举 (StepStatus)
+// 作用：定义单个节点执行步骤的可能状态
+// ==========================================
+enum StepStatus {
+  PENDING   // 待执行
+  RUNNING   // 执行中
+  SUCCEEDED // 执行成功
+  FAILED    // 执行失败
+}
+
+// ==========================================
+// 执行步骤模型 (Step)
+// 作用：记录每个节点的执行详情
+// ==========================================
+model Step {
+  id        String       @id @default(cuid())  // 步骤唯一标识符
+  runId     String                             // 所属运行记录ID（外键）
+  nodeId    String                             // 执行的节点ID（外键）
+  status    StepStatus   @default(PENDING)     // 当前状态（默认为待执行）
+  startedAt DateTime?                          // 开始执行时间（可选）
+  finishedAt DateTime?                         // 执行结束时间（可选）
+  input     Json?                              // 输入数据（JSON格式）
+  output    Json?                              // 输出结果（JSON格式）
+  error     String?                            // 错误信息（如果执行失败）
+
+  // 关联关系
+  run       Run          @relation(fields: [runId], references: [id], onDelete: Cascade)     // 所属运行记录
+  node      WorkflowNode @relation(fields: [nodeId], references: [id], onDelete: Cascade)   // 执行的节点
+
+  // 索引：加速查询
+  @@index([runId])   // 按运行记录ID查询
+  @@index([nodeId])  // 按节点ID查询
+}

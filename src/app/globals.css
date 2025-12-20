@@ -1,26 +1,58 @@
+/* ==========================================
+   全局样式表
+   文件作用：定义整个应用的基础样式和颜色主题
+   技术：Tailwind CSS + CSS 变量 + 深色模式
+   ========================================== */
+
+/* 导入 Tailwind CSS 核心样式 */
 @import "tailwindcss";
 
+/* ==========================================
+   CSS 变量定义（浅色模式）
+   ========================================== */
 :root {
+  /* 背景颜色：白色 */
   --background: #ffffff;
+  /* 前景颜色（文字）：深灰色 */
   --foreground: #171717;
 }
 
+/* ==========================================
+   Tailwind 主题配置
+   作用：将 CSS 变量映射到 Tailwind 的颜色系统
+   ========================================== */
 @theme inline {
+  /* 背景颜色：可以在 Tailwind 类中使用 bg-background */
   --color-background: var(--background);
+  /* 前景颜色：可以在 Tailwind 类中使用 text-foreground */
   --color-foreground: var(--foreground);
+  /* 无衬线字体：Geist Sans */
   --font-sans: var(--font-geist-sans);
+  /* 等宽字体：Geist Mono（用于代码展示） */
   --font-mono: var(--font-geist-mono);
 }
 
+/* ==========================================
+   深色模式
+   作用：根据系统偏好自动切换为深色主题
+   ========================================== */
 @media (prefers-color-scheme: dark) {
   :root {
+    /* 深色模式背景：几乎黑色 */
     --background: #0a0a0a;
+    /* 深色模式前景：浅灰色文字 */
     --foreground: #ededed;
   }
 }
 
+/* ==========================================
+   页面基础样式
+   ========================================== */
 body {
+  /* 使用 CSS 变量定义的背景颜色 */
   background: var(--background);
+  /* 使用 CSS 变量定义的文字颜色 */
   color: var(--foreground);
+  /* 默认字体堆栈（备用方案） */
   font-family: Arial, Helvetica, sans-serif;
 }
