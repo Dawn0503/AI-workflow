@@ -32,7 +32,7 @@ export interface NodeOperatorArgs {
     id: string;              // 节点唯一标识符
     type: string;            // 节点类型（如 "input", "openai.chat" 等）
     label?: string | null;   // 节点显示标签
-    config: any;             // 节点配置（不同类型节点配置不同）
+    config: Record<string, unknown>; // 节点配置（不同类型节点配置不同）
   };
   context: ExecutionContext;  // 当前执行上下文（包含所有累积的数据）
 }
@@ -79,12 +79,24 @@ async function runOpenAIChat(args: {
   const res = await client.chat.completions.create({
     model: args.model,  // 指定使用的模型
     messages: [
-      // 如果提供了系统提示词，先添加系统消息
-      ...(args.system ? [{ role: "system" as const, content: args.system }] : []),
-      // 添加用户消息
-      { role: "user" as const, content: args.user },
+      // 展开运算符 ...：如果 args.system 有值，则生成一个只含 system 消息的数组，否则是空数组
+      // (三元运算符返回数组，... 展开其元素)
+      ...(args.system 
+        ? [
+            {
+              role: "system" as const, // as const 断言，这里的 role 是常量类型 "system"
+              content: args.system
+            }
+          ] 
+        : [] // 没有 system 时，展开的是空数组（不插入 system 消息）
+      ),
+      // 用户消息对象，role 用 "user" as const 保证类型推断为字面量 "user"
+      {
+        role: "user" as const, // as const：让 role 类型不会宽化成 string，而是字面量 "user"
+        content: args.user
+      },
     ],
-    temperature: 0.2,  // 温度参数：控制输出的随机性，0.2 表示比较确定性的输出
+    temperature: 0.2, // 温度参数，数值越低，AI 回复越稳定、可控
   });
   
   // 提取并返回 AI 的回复内容
