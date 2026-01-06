@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="AI-Workflow-Tech-Share" name="AI工作流系统技术分享">
-        <mxGraphModel dx="2266" dy="2183" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3200" pageHeight="4000" math="0" shadow="0">
+        <mxGraphModel dx="984" dy="994" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3200" pageHeight="4000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -52,32 +52,32 @@
                 <mxCell id="arch-5" value="数据存储层 (Database)&#10;SQLite/PostgreSQL&#10;• 工作流定义&#10;• 执行记录&#10;• 状态追踪" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="900" y="580" width="350" height="100" as="geometry"/>
                 </mxCell>
-                <mxCell id="dataflow" value="4. 数据流" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85c38;strokeColor=#8b4513;fontSize=20;fontStyle=1;fontColor=#FFFFFF" vertex="1" parent="1">
+                <mxCell id="dataflow" value="4. 数据流" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85c38;strokeColor=#8b4513;fontSize=20;fontStyle=1;fontColor=#FFFFFF" parent="1" vertex="1">
                     <mxGeometry x="1300" y="250" width="350" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-1" value="1. 用户操作&#10;前端页面交互&#10;• 创建工作流&#10;• 编辑节点&#10;• 触发执行" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="flow-1" value="1. 用户操作&#10;前端页面交互&#10;• 创建工作流&#10;• 编辑节点&#10;• 触发执行" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1300" y="340" width="160" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-2" value="2. HTTP请求&#10;API路由接收&#10;• POST /api/workflows&#10;• PUT /api/workflows/:id&#10;• POST /api/workflows/:id/run" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="flow-2" value="2. HTTP请求&#10;API路由接收&#10;• POST /api/workflows&#10;• PUT /api/workflows/:id&#10;• POST /api/workflows/:id/run" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1490" y="340" width="160" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-3" value="3. 业务处理&#10;执行引擎&#10;• 加载工作流数据&#10;• 拓扑排序节点&#10;• 执行节点操作器" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="flow-3" value="3. 业务处理&#10;执行引擎&#10;• 加载工作流数据&#10;• 拓扑排序节点&#10;• 执行节点操作器" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1300" y="450" width="160" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-4" value="4. 数据持久化&#10;Prisma操作&#10;• 创建Run记录&#10;• 创建Step记录&#10;• 更新执行状态" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="flow-4" value="4. 数据持久化&#10;Prisma操作&#10;• 创建Run记录&#10;• 创建Step记录&#10;• 更新执行状态" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1490" y="450" width="160" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-5" value="5. 返回响应&#10;JSON数据&#10;• 工作流信息&#10;• 执行结果&#10;• 状态更新" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="flow-5" value="5. 返回响应&#10;JSON数据&#10;• 工作流信息&#10;• 执行结果&#10;• 状态更新" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1300" y="560" width="160" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-6" value="6. 前端更新&#10;UI渲染&#10;• 显示工作流列表&#10;• 展示执行进度&#10;• 实时轮询状态" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="flow-6" value="6. 前端更新&#10;UI渲染&#10;• 显示工作流列表&#10;• 展示执行进度&#10;• 实时轮询状态" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1490" y="560" width="160" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="features" value="5. 核心功能" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#5a3d5c;strokeColor=#3d283e;fontSize=20;fontStyle=1;fontColor=#FFFFFF" parent="1" vertex="1">
                     <mxGeometry x="1700" y="250" width="350" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="feat-1" value="可视化编辑器&#10;• ReactFlow拖拽&#10;• 节点配置面板&#10;• 连接线管理" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
-                    <mxGeometry x="1700" y="340" width="160" height="80" as="geometry"/>
+                    <mxGeometry x="1570" y="110" width="160" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="feat-2" value="工作流执行&#10;• 拓扑排序算法&#10;• 节点操作器模式&#10;• 上下文传递" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1890" y="340" width="160" height="80" as="geometry"/>
@@ -106,7 +106,7 @@
                 <mxCell id="model-5" value="Step&#10;执行步骤&#10;• nodeId, status&#10;• input, output, error" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="100" y="1040" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="model-relation" value="关系：&#10;Workflow 1:N WorkflowNode&#10;Workflow 1:N WorkflowEdge&#10;Workflow 1:N Run&#10;Run 1:N Step" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="model-relation" value="关系：&#10;Workflow 1:N WorkflowNode&#10;Workflow 1:N WorkflowEdge&#10;Workflow 1:N Run&#10;Run 1:N Step" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="290" y="1040" width="160" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="execution" value="7. 执行流程" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85c38;strokeColor=#8b4513;fontSize=20;fontStyle=1;fontColor=#FFFFFF" parent="1" vertex="1">
@@ -133,25 +133,25 @@
                 <mxCell id="reasons" value="8. 技术选型理由" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8b2635;strokeColor=#5a181f;fontSize=20;fontStyle=1;fontColor=#FFFFFF" parent="1" vertex="1">
                     <mxGeometry x="900" y="750" width="350" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="reason-nextjs" value="Next.js优势&#10;• 全栈一体化架构&#10;• API Routes内置&#10;• 服务端组件(RSC)&#10;• 自动代码分割&#10;• Vercel零配置部署" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="reason-nextjs" value="Next.js优势&#10;• 全栈一体化架构&#10;• API Routes内置&#10;• 服务端组件(RSC)&#10;• 自动代码分割&#10;• Vercel零配置部署" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="900" y="840" width="160" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="reason-prisma" value="Prisma优势&#10;• 类型安全ORM&#10;• 自动生成TypeScript类型&#10;• 声明式Schema定义&#10;• 强大的查询能力&#10;• 完善的迁移系统" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="reason-prisma" value="Prisma优势&#10;• 类型安全ORM&#10;• 自动生成TypeScript类型&#10;• 声明式Schema定义&#10;• 强大的查询能力&#10;• 完善的迁移系统" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1090" y="840" width="160" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="structure" value="9. 项目结构" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2d5016;strokeColor=#1a3009;fontSize=20;fontStyle=1;fontColor=#FFFFFF" parent="1" vertex="1">
                     <mxGeometry x="1300" y="750" width="350" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="struct-frontend" value="前端 (src/app/)&#10;• page.tsx - 页面组件&#10;• layout.tsx - 根布局&#10;• globals.css - 全局样式&#10;• workflows/ - 工作流页面&#10;• runs/ - 执行结果页面" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="struct-frontend" value="前端 (src/app/)&#10;• page.tsx - 页面组件&#10;• layout.tsx - 根布局&#10;• globals.css - 全局样式&#10;• workflows/ - 工作流页面&#10;• runs/ - 执行结果页面" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1300" y="840" width="160" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="struct-api" value="API (src/app/api/)&#10;• workflows/route.ts&#10;• workflows/[id]/route.ts&#10;• workflows/[id]/run/route.ts&#10;• runs/route.ts&#10;• runs/[id]/route.ts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="struct-api" value="API (src/app/api/)&#10;• workflows/route.ts&#10;• workflows/[id]/route.ts&#10;• workflows/[id]/run/route.ts&#10;• runs/route.ts&#10;• runs/[id]/route.ts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1490" y="840" width="160" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="struct-lib" value="核心库 (src/lib/)&#10;• prisma.ts - 数据库客户端&#10;• openai.ts - AI客户端&#10;• engine.ts - 执行引擎&#10;• utils/interpolate.ts - 工具函数" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="struct-lib" value="核心库 (src/lib/)&#10;• prisma.ts - 数据库客户端&#10;• openai.ts - AI客户端&#10;• engine.ts - 执行引擎&#10;• utils/interpolate.ts - 工具函数" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1300" y="980" width="160" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="struct-db" value="数据库 (prisma/)&#10;• schema.prisma - 数据模型&#10;• migrations/ - 迁移文件&#10;• dev.db - SQLite数据库" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="struct-db" value="数据库 (prisma/)&#10;• schema.prisma - 数据模型&#10;• migrations/ - 迁移文件&#10;• dev.db - SQLite数据库" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1490" y="980" width="160" height="110" as="geometry"/>
                 </mxCell>
                 <mxCell id="advantages" value="10. 核心优势" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#5a3d5c;strokeColor=#3d283e;fontSize=20;fontStyle=1;fontColor=#FFFFFF" parent="1" vertex="1">
@@ -169,69 +169,69 @@
                 <mxCell id="adv-4" value="部署简单便捷&#10;• Vercel一键部署&#10;• 零配置启动&#10;• Docker支持" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1890" y="940" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="node-types" value="11. 节点类型" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1a5490;strokeColor=#0d3d6b;fontSize=20;fontStyle=1;fontColor=#FFFFFF" vertex="1" parent="1">
+                <mxCell id="node-types" value="11. 节点类型" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1a5490;strokeColor=#0d3d6b;fontSize=20;fontStyle=1;fontColor=#FFFFFF" parent="1" vertex="1">
                     <mxGeometry x="100" y="1200" width="350" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="node-input" value="input节点&#10;• 初始化上下文&#10;• 接收用户输入&#10;• 作为工作流起点" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="node-input" value="input节点&#10;• 初始化上下文&#10;• 接收用户输入&#10;• 作为工作流起点" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="100" y="1290" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="node-openai" value="openai.chat节点&#10;• 调用AI模型&#10;• 支持模板插值&#10;• 多模型兼容" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="node-openai" value="openai.chat节点&#10;• 调用AI模型&#10;• 支持模板插值&#10;• 多模型兼容" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="290" y="1290" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="node-map" value="map.set节点&#10;• 设置变量到上下文&#10;• 支持路径设置&#10;• 数据转换" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="node-map" value="map.set节点&#10;• 设置变量到上下文&#10;• 支持路径设置&#10;• 数据转换" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="100" y="1390" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="node-http" value="http.request节点&#10;• 发送HTTP请求&#10;• 调用外部API&#10;• 支持GET/POST等" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="node-http" value="http.request节点&#10;• 发送HTTP请求&#10;• 调用外部API&#10;• 支持GET/POST等" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="290" y="1390" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="tech-points" value="12. 关键技术点" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85c38;strokeColor=#8b4513;fontSize=20;fontStyle=1;fontColor=#FFFFFF" vertex="1" parent="1">
+                <mxCell id="tech-points" value="12. 关键技术点" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85c38;strokeColor=#8b4513;fontSize=20;fontStyle=1;fontColor=#FFFFFF" parent="1" vertex="1">
                     <mxGeometry x="500" y="1200" width="350" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="point-1" value="单例模式&#10;• Prisma客户端单例&#10;• OpenAI客户端单例&#10;• 全局变量优化(开发环境)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="point-1" value="单例模式&#10;• Prisma客户端单例&#10;• OpenAI客户端单例&#10;• 全局变量优化(开发环境)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="500" y="1290" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="point-2" value="拓扑排序&#10;• Kahn算法实现&#10;• 检测循环依赖&#10;• 确定执行顺序" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="point-2" value="拓扑排序&#10;• Kahn算法实现&#10;• 检测循环依赖&#10;• 确定执行顺序" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="690" y="1290" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="point-3" value="模板插值&#10;• {{variable}}语法&#10;• 嵌套路径支持&#10;• 上下文变量替换" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="point-3" value="模板插值&#10;• {{variable}}语法&#10;• 嵌套路径支持&#10;• 上下文变量替换" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="500" y="1390" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="point-4" value="节点操作器模式&#10;• 统一接口定义&#10;• 可扩展注册机制&#10;• 上下文传递" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="point-4" value="节点操作器模式&#10;• 统一接口定义&#10;• 可扩展注册机制&#10;• 上下文传递" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="690" y="1390" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="dataflow-detail" value="13. 完整数据流" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85c38;strokeColor=#8b4513;fontSize=20;fontStyle=1;fontColor=#FFFFFF" vertex="1" parent="1">
+                <mxCell id="dataflow-detail" value="13. 完整数据流" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85c38;strokeColor=#8b4513;fontSize=20;fontStyle=1;fontColor=#FFFFFF" parent="1" vertex="1">
                     <mxGeometry x="900" y="1200" width="350" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-detail-1" value="用户操作&#10;浏览器端" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13" vertex="1" parent="1">
+                <mxCell id="flow-detail-1" value="用户操作&#10;浏览器端" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13" parent="1" vertex="1">
                     <mxGeometry x="890" y="1290" width="100" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-arrow-1" value="&lt;font color=&quot;#ffffff&quot;&gt;HTTP请求&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;fontSize=12;strokeWidth=2" edge="1" parent="1" source="flow-detail-1" target="flow-detail-2">
+                <mxCell id="flow-arrow-1" value="&lt;font color=&quot;#ffffff&quot;&gt;HTTP请求&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;fontSize=12;strokeWidth=2" parent="1" source="flow-detail-1" target="flow-detail-2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-detail-2" value="API路由&#10;服务器端" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13" vertex="1" parent="1">
+                <mxCell id="flow-detail-2" value="API路由&#10;服务器端" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13" parent="1" vertex="1">
                     <mxGeometry x="1030" y="1290" width="100" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-arrow-2" value="调用" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;fontSize=12;strokeWidth=2" edge="1" parent="1" source="flow-detail-2" target="flow-detail-3">
+                <mxCell id="flow-arrow-2" value="调用" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;fontSize=12;strokeWidth=2" parent="1" source="flow-detail-2" target="flow-detail-3" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-detail-3" value="执行引擎&#10;业务逻辑" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13" vertex="1" parent="1">
+                <mxCell id="flow-detail-3" value="执行引擎&#10;业务逻辑" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13" parent="1" vertex="1">
                     <mxGeometry x="1160" y="1290" width="100" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-arrow-3" value="查询/写入" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;fontSize=12;strokeWidth=2" edge="1" parent="1" source="flow-detail-3" target="flow-detail-4">
+                <mxCell id="flow-arrow-3" value="查询/写入" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;fontSize=12;strokeWidth=2" parent="1" source="flow-detail-3" target="flow-detail-4" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-detail-4" value="Prisma ORM&#10;数据访问" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13" vertex="1" parent="1">
+                <mxCell id="flow-detail-4" value="Prisma ORM&#10;数据访问" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13" parent="1" vertex="1">
                     <mxGeometry x="1290" y="1290" width="100" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-arrow-4" value="&lt;font color=&quot;#ffffff&quot;&gt;SQL操作&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;fontSize=12;strokeWidth=2" edge="1" parent="1" source="flow-detail-4" target="flow-detail-5">
+                <mxCell id="flow-arrow-4" value="&lt;font color=&quot;#ffffff&quot;&gt;SQL操作&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;fontSize=12;strokeWidth=2" parent="1" source="flow-detail-4" target="flow-detail-5" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="flow-detail-5" value="数据库&#10;SQLite/PostgreSQL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13" vertex="1" parent="1">
+                <mxCell id="flow-detail-5" value="数据库&#10;SQLite/PostgreSQL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13" parent="1" vertex="1">
                     <mxGeometry x="900" y="1370" width="490" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="flow-arrow-5" value="&lt;font color=&quot;#ffffff&quot;&gt;返回数据&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;fontSize=12;strokeWidth=2" edge="1" parent="1" source="flow-detail-5" target="flow-detail-4">
+                <mxCell id="flow-arrow-5" value="&lt;font color=&quot;#ffffff&quot;&gt;返回数据&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;fontSize=12;strokeWidth=2" parent="1" source="flow-detail-5" target="flow-detail-4" edge="1">
                     <mxGeometry y="-35" relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="1145" y="1420"/>
@@ -240,40 +240,40 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="api-endpoints" value="14. API接口" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8b2635;strokeColor=#5a181f;fontSize=20;fontStyle=1;fontColor=#FFFFFF" vertex="1" parent="1">
+                <mxCell id="api-endpoints" value="14. API接口" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8b2635;strokeColor=#5a181f;fontSize=20;fontStyle=1;fontColor=#FFFFFF" parent="1" vertex="1">
                     <mxGeometry x="1300" y="1200" width="350" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="api-1" value="GET /api/workflows&#10;获取工作流列表" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="api-1" value="GET /api/workflows&#10;获取工作流列表" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1300" y="1290" width="160" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="api-2" value="POST /api/workflows&#10;创建工作流" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="api-2" value="POST /api/workflows&#10;创建工作流" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1490" y="1290" width="160" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="api-3" value="GET /api/workflows/:id&#10;获取单个工作流" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="api-3" value="GET /api/workflows/:id&#10;获取单个工作流" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1300" y="1360" width="160" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="api-4" value="PUT /api/workflows/:id&#10;更新工作流" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="api-4" value="PUT /api/workflows/:id&#10;更新工作流" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1490" y="1360" width="160" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="api-5" value="POST /api/workflows/:id/run&#10;执行工作流" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="api-5" value="POST /api/workflows/:id/run&#10;执行工作流" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1300" y="1430" width="160" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="api-6" value="GET /api/runs/:id&#10;获取执行结果" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="api-6" value="GET /api/runs/:id&#10;获取执行结果" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1490" y="1430" width="160" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="extensibility" value="15. 扩展性" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2d5016;strokeColor=#1a3009;fontSize=20;fontStyle=1;fontColor=#FFFFFF" vertex="1" parent="1">
+                <mxCell id="extensibility" value="15. 扩展性" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2d5016;strokeColor=#1a3009;fontSize=20;fontStyle=1;fontColor=#FFFFFF" parent="1" vertex="1">
                     <mxGeometry x="1700" y="1200" width="350" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="ext-1" value="新增节点类型&#10;• 注册节点操作器&#10;• 实现统一接口&#10;• 配置UI面板" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="ext-1" value="新增节点类型&#10;• 注册节点操作器&#10;• 实现统一接口&#10;• 配置UI面板" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1700" y="1290" width="160" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="ext-2" value="条件分支&#10;• 支持条件判断&#10;• 动态路由选择&#10;• 条件表达式" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="ext-2" value="条件分支&#10;• 支持条件判断&#10;• 动态路由选择&#10;• 条件表达式" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1890" y="1290" width="160" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="ext-3" value="循环节点&#10;• 支持迭代处理&#10;• 批量数据操作&#10;• 循环控制" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="ext-3" value="循环节点&#10;• 支持迭代处理&#10;• 批量数据操作&#10;• 循环控制" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1700" y="1400" width="160" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="ext-4" value="并行执行&#10;• 无依赖节点并行&#10;• 性能优化&#10;• 资源管理" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" vertex="1" parent="1">
+                <mxCell id="ext-4" value="并行执行&#10;• 无依赖节点并行&#10;• 性能优化&#10;• 资源管理" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=5;fontColor=#000000;fontSize=12" parent="1" vertex="1">
                     <mxGeometry x="1890" y="1400" width="160" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="edge1" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=3;fontColor=#000000" parent="1" source="center" target="overview" edge="1">

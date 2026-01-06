@@ -27,7 +27,7 @@ export function interpolateTemplate(template: string, context: ExecutionContext)
     (_, key: string) => {          // 替换函数：第一个参数是完整匹配，第二个是捕获的变量名
       // 按点号分割路径，支持嵌套访问
       const parts = key.split(".");  // 例如："user.name" => ["user", "name"]
-      let value: any = context;       // 从上下文对象开始查找
+      let value: unknown = context;       // 从上下文对象开始查找
       
       // 遍历路径的每一部分
       for (const p of parts) {
