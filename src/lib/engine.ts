@@ -12,6 +12,7 @@
 import { prisma } from "@/lib/prisma";  // 数据库客户端
 import { getOpenAIClient } from "@/lib/openai";  // OpenAI 客户端
 import { ExecutionContext, interpolateTemplate, setByPath } from "@/lib/utils/interpolate";  // 模板插值工具
+import { Prisma } from "@prisma/client";  // Prisma 类型
 
 // ==========================================
 // 类型定义
@@ -173,12 +174,11 @@ operatorRegistry.register("input", async ({ context }) => ({
  */
 operatorRegistry.register("openai.chat", async ({ node, context }) => {
   // 从节点配置中提取参数，使用默认值
-  const { 
-    model = "gpt-4o-mini",           // AI 模型名称
-    system = "",                     // 系统提示词
-    promptTemplate = "",             // 提示模板
-    outputKey = "ai_output"          // 输出键名
-  } = node.config || {};
+  const config = node.config || {};
+  const model = String(config.model ?? "gpt-4o-mini");           // AI 模型名称
+  const system = config.system ? String(config.system) : "";     // 系统提示词
+  const promptTemplate = config.promptTemplate ?? "";            // 提示模板
+  const outputKey = String(config.outputKey ?? "ai_output");     // 输出键名
   
   // 步骤1：模板插值 - 将 promptTemplate 中的 {{variable}} 替换为上下文中的实际值
   // 例如：promptTemplate = "分析：{{text}}", context = { text: "Hello" }
@@ -253,22 +253,21 @@ operatorRegistry.register("map.set", async ({ node, context }) => {
  */
 operatorRegistry.register("http.request", async ({ node, context }) => {
   // 从节点配置中提取参数
-  const { 
-    urlTemplate,             // URL 模板
-    method = "GET",          // HTTP 方法
-    headers = {},            // 请求头
-    bodyTemplate             // 请求体模板
-  } = node.config || {};
+  const config = node.config || {};
+  const urlTemplate = config.urlTemplate;           // URL 模板
+  const method = String(config.method ?? "GET");    // HTTP 方法
+  const headers = config.headers;                   // 请求头
+  const bodyTemplate = config.bodyTemplate;         // 请求体模板
   
   // 步骤1：模板插值 - 替换 URL 中的变量
   const url = interpolateTemplate(String(urlTemplate ?? ""), context);
   
   // 步骤2：构建请求选项
-  const init: RequestInit = { method };  // 设置 HTTP 方法
+  const init: RequestInit = { method: method as RequestInit["method"] };  // 设置 HTTP 方法
   
   // 如果有请求头，添加到请求选项
-  if (headers && Object.keys(headers).length) {
-    init.headers = headers;
+  if (headers && typeof headers === "object" && headers !== null && !Array.isArray(headers)) {
+    init.headers = headers as HeadersInit;
   }
   
   // 如果有请求体且不是 GET 请求，添加请求体
@@ -422,13 +421,14 @@ export async function executeWorkflow(params: {
   if (!workflow) throw new Error("Workflow not found");
 
   // ========== 步骤2：创建运行记录 ==========
+  const inputData = (params.input ?? {}) as Prisma.InputJsonValue;
   const run = await prisma.run.create({
     data: {
       workflowId: workflow.id,           // 关联工作流
       status: "RUNNING",                 // 初始状态：运行中
       startedAt: new Date(),             // 记录开始时间
-      input: params.input ?? {},         // 保存输入数据
-      context: params.input ?? {},       // 初始上下文就是输入数据
+      input: inputData,                  // 保存输入数据
+      context: inputData,                // 初始上下文就是输入数据
     },
   });
 
@@ -463,7 +463,7 @@ export async function executeWorkflow(params: {
           nodeId: node.id,            // 关联节点
           status: "RUNNING",          // 初始状态：运行中
           startedAt: new Date(),      // 记录开始时间
-          input: context,             // 当前上下文作为输入
+          input: context as Prisma.InputJsonValue,  // 当前上下文作为输入
         },
       });
       
@@ -474,12 +474,16 @@ export async function executeWorkflow(params: {
         }
         
         // 执行节点操作器
+        // 将 Prisma 的 JsonValue 转换为 Record<string, unknown>
+        const nodeConfig = node.config && typeof node.config === "object" && !Array.isArray(node.config)
+          ? (node.config as Record<string, unknown>)
+          : {};
         const { output, contextPatch } = await operator({ 
           node: { 
             id: node.id, 
             type: node.type, 
             label: node.label, 
-            config: node.config 
+            config: nodeConfig
           }, 
           context  // 传入当前上下文
         });
@@ -495,17 +499,19 @@ export async function executeWorkflow(params: {
           data: { 
             status: "SUCCEEDED",        // 状态：成功
             finishedAt: new Date(),     // 记录结束时间
-            output: output ?? null      // 保存输出结果
+            output: output !== undefined ? (output as Prisma.InputJsonValue) : undefined  // 保存输出结果
           },
         });
-      } catch (err: any) {
+      } catch (err: unknown) {
         // 节点执行失败：更新步骤状态
+        // 提取错误信息：如果是 Error 对象则使用 message，否则转换为字符串
+        const errorMessage = err instanceof Error ? err.message : String(err);
         await prisma.step.update({
           where: { id: step.id },
           data: { 
             status: "FAILED",                        // 状态：失败
             finishedAt: new Date(),                  // 记录结束时间
-            error: String(err?.message ?? err)       // 保存错误信息
+            error: errorMessage                      // 保存错误信息
           },
         });
         // 抛出错误，终止整个工作流
@@ -515,7 +521,7 @@ export async function executeWorkflow(params: {
       // 更新运行记录的上下文（保存当前累积的所有数据）
       await prisma.run.update({ 
         where: { id: run.id }, 
-        data: { context } 
+        data: { context: context as Prisma.InputJsonValue } 
       });
     }
 
@@ -525,21 +531,23 @@ export async function executeWorkflow(params: {
       data: { 
         status: "SUCCEEDED",         // 状态：执行成功
         finishedAt: new Date(),      // 记录结束时间
-        context                      // 保存最终上下文
+        context: context as Prisma.InputJsonValue  // 保存最终上下文
       },
     });
     
     // 返回运行记录 ID
     return { runId: run.id };
     
-  } catch (error: any) {
+  } catch (error: unknown) {
     // ========== 步骤6：工作流执行失败 ==========
+    // 提取错误信息：如果是 Error 对象则使用 message，否则转换为字符串
+    const errorMessage = error instanceof Error ? error.message : String(error);
     await prisma.run.update({
       where: { id: run.id },
       data: { 
         status: "FAILED",                      // 状态：执行失败
         finishedAt: new Date(),                // 记录结束时间
-        error: String(error?.message ?? error) // 保存错误信息
+        error: errorMessage                    // 保存错误信息
       },
     });
     // 继续抛出错误，让调用者知道执行失败

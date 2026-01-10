@@ -61,10 +61,11 @@ export function setByPath(target: ExecutionContext, path: string, value: unknown
   const parts = path.split(".");  // 例如："user.name" => ["user", "name"]
   
   // 创建目标对象的浅拷贝（不修改原对象）
-  const clone: any = { ...target };
+  const clone: ExecutionContext = { ...target };
   
-  // 游标：指向当前正在处理的对象
-  let cursor: any = clone;
+  // 游标：指向当前正在处理的对象（用于遍历嵌套路径）
+  // 类型为 Record<string, unknown>，因为需要动态访问和设置属性
+  let cursor: Record<string, unknown> = clone;
   
   // 遍历路径的每一部分（除了最后一个）
   for (let i = 0; i < parts.length - 1; i++) {
@@ -72,10 +73,20 @@ export function setByPath(target: ExecutionContext, path: string, value: unknown
     
     // 如果当前键已存在且是对象，则复制它；否则创建新对象
     // 作用：确保中间路径存在，支持嵌套
-    cursor[key] = cursor[key] && typeof cursor[key] === "object" ? { ...cursor[key] } : {};
+    const currentValue = cursor[key];
+    if (currentValue && typeof currentValue === "object" && !Array.isArray(currentValue)) {
+      cursor[key] = { ...(currentValue as Record<string, unknown>) };
+    } else {
+      cursor[key] = {};
+    }
     
-    // 移动游标到下一层
-    cursor = cursor[key];
+    // 移动游标到下一层（确保类型安全）
+    const nextValue = cursor[key];
+    if (nextValue && typeof nextValue === "object" && !Array.isArray(nextValue)) {
+      cursor = nextValue as Record<string, unknown>;
+    } else {
+      cursor = {};
+    }
   }
   
   // 设置最后一个键的值
