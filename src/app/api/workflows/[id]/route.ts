@@ -129,10 +129,11 @@ export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }
 
   // 步骤2：重新创建节点，建立 ID 映射
   // 原因：前端使用的是临时ID（如 "temp_node_1"），数据库会生成新的ID
+  // clientId: 前端临时ID; dbId: 数据库真实ID
   const createdNodes: { clientId: string; dbId: string }[] = [];
   
   for (const n of nodes) {
-    // 在数据库中创建节点
+    // 在数据库中创建节点， 数据库自动生成真实 ID 
     const created = await prisma.workflowNode.create({
       data: {
         workflowId: id,                               // 关联工作流
@@ -166,9 +167,10 @@ export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }
    * 2. 如果找不到，说明传来的本来就是数据库ID，直接返回
    */
   function mapToDb(nodeId: string) {
+    // 在映射表中查找: 找到 clientId 等于 nodeId 的项
     const hit = createdNodes.find(x => x.clientId === nodeId);
     return hit?.dbId ?? nodeId;  // 找到映射就用映射的ID，否则直接用原ID
-  }
+  } // createdNodes 只在当前函数的作用域内，直接访问 createdNodes，无需每次传参
 
   // 步骤3：创建边（连接线）
   for (const e of edges) {

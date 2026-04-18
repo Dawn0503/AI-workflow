@@ -32,6 +32,9 @@ type Workflow = {
 const nodeTypeMap: Record<string, { label: string; icon: string; color: string }> = {
   'input': { label: '输入节点', icon: '📥', color: 'bg-green-100 text-green-800 border-green-200' },
   'openai.chat': { label: 'AI对话', icon: '🤖', color: 'bg-blue-100 text-blue-800 border-blue-200' },
+  'langchain.chain': { label: 'LangChain链', icon: '🔗', color: 'bg-cyan-100 text-cyan-800 border-cyan-200' },
+  'langchain.agent': { label: 'LangChain代理', icon: '🧠', color: 'bg-teal-100 text-teal-800 border-teal-200' },
+  'langchain.memory': { label: 'LangChain记忆', icon: '💾', color: 'bg-brown-100 text-brown-800 border-brown-200' },
   'map.set': { label: '设置变量', icon: '📝', color: 'bg-orange-100 text-orange-800 border-orange-200' },
   'http.request': { label: 'HTTP请求', icon: '🌐', color: 'bg-purple-100 text-purple-800 border-purple-200' },
 };
@@ -65,7 +68,12 @@ export default function WorkflowDetail() {
     fetchWorkflow();
   }, [id]);
 
-  const hasOpenAI = useMemo(() => wf?.nodes.some(n => n.type === "openai.chat") ?? false, [wf]);
+  // 检查是否包含任何 AI 节点（包括 OpenAI 和 LangChain 节点）
+  const hasAINodes = useMemo(() => {
+    if (!wf) return false;
+    const aiNodeTypes = ["openai.chat", "langchain.chain", "langchain.agent"];
+    return wf.nodes.some(n => aiNodeTypes.includes(n.type));
+  }, [wf]);
 
   const nodeTypeCounts = useMemo(() => {
     if (!wf) return {};
@@ -77,7 +85,7 @@ export default function WorkflowDetail() {
   }, [wf]);
 
   async function run() {
-    if (!text.trim() && hasOpenAI) {
+    if (!text.trim() && hasAINodes) {
       alert('请输入文本内容');
       return;
     }
@@ -272,11 +280,11 @@ export default function WorkflowDetail() {
               </h3>
             </div>
             <div className="p-6">
-              {!hasOpenAI ? (
+              {!hasAINodes ? (
                 <div className="text-center py-8">
                   <div className="text-gray-400 text-2xl mb-2">🤖</div>
                   <p className="text-gray-600 mb-2">此工作流不包含AI节点</p>
-                  <p className="text-sm text-gray-500">添加AI对话节点后即可运行</p>
+                  <p className="text-sm text-gray-500">添加AI对话节点或LangChain节点后即可运行</p>
                 </div>
               ) : (
                 <div className="space-y-4">

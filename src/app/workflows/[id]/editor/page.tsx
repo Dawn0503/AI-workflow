@@ -27,6 +27,9 @@ const CustomNode = ({ data, selected }: any) => {
     switch (type) {
       case 'input': return '#4CAF50';
       case 'openai.chat': return '#2196F3';
+      case 'langchain.chain': return '#00BCD4'; // 青色 - LangChain Chain
+      case 'langchain.agent': return '#009688'; // 青绿色 - LangChain Agent
+      case 'langchain.memory': return '#795548'; // 棕色 - LangChain Memory
       case 'map.set': return '#FF9800';
       case 'http.request': return '#9C27B0';
       default: return '#757575';
@@ -87,6 +90,9 @@ const nodeTypes: NodeTypes = {
 const nodeTemplates = [
   { type: 'input', label: '输入节点', description: '工作流的起始点' },
   { type: 'openai.chat', label: 'AI对话', description: 'OpenAI GPT模型' },
+  { type: 'langchain.chain', label: 'LangChain链', description: 'LangChain顺序链' },
+  { type: 'langchain.agent', label: 'LangChain代理', description: 'LangChain智能代理' },
+  { type: 'langchain.memory', label: 'LangChain记忆', description: '对话历史管理' },
   { type: 'map.set', label: '设置变量', description: '存储上下文数据' },
   { type: 'http.request', label: 'HTTP请求', description: '调用外部API' },
 ];
@@ -195,7 +201,7 @@ export default function WorkflowEditor() {
         id: `edge_${Date.now()}`,
         type: 'smoothstep',
       };
-      setEdges((eds) => addEdge(newEdge, eds));
+      setEdges((eds: Edge[]) => addEdge(newEdge as Edge, eds));
     },
     []
   );
@@ -422,7 +428,7 @@ export default function WorkflowEditor() {
         {!selectedNode ? (
           <div className="text-gray-500 text-sm">
             <p>点击画布中的节点来编辑其属性。</p>
-            <p className="mt-2">建议从添加"输入节点"开始构建您的工作流。</p>
+            <p className="mt-2">建议从添加&quot;输入节点&quot;开始构建您的工作流。</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -531,6 +537,185 @@ export default function WorkflowEditor() {
                     className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
                 </div>
+              </>
+            )}
+
+            {/* LangChain Chain 节点配置 */}
+            {selectedNode.data.type === 'langchain.chain' && (
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    模型名称
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="如: gpt-4o-mini"
+                    value={selectedNode.data.config.model || ''}
+                    onChange={(e) => updateNodeConfig('model', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    系统提示词模板
+                  </label>
+                  <textarea
+                    rows={3}
+                    placeholder="可选，定义AI的角色"
+                    value={selectedNode.data.config.systemTemplate || ''}
+                    onChange={(e) => updateNodeConfig('systemTemplate', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    提示词模板
+                  </label>
+                  <textarea
+                    rows={4}
+                    placeholder="支持 {{variable}} 插值，例如: 请总结：{{text}}"
+                    value={selectedNode.data.config.promptTemplate || ''}
+                    onChange={(e) => updateNodeConfig('promptTemplate', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    温度参数
+                  </label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    max="2"
+                    placeholder="0.2"
+                    value={selectedNode.data.config.temperature || ''}
+                    onChange={(e) => updateNodeConfig('temperature', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    输出键名
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="如: chain_output"
+                    value={selectedNode.data.config.outputKey || ''}
+                    onChange={(e) => updateNodeConfig('outputKey', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+              </>
+            )}
+
+            {/* LangChain Agent 节点配置 */}
+            {selectedNode.data.type === 'langchain.agent' && (
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    模型名称
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="如: gpt-4o-mini"
+                    value={selectedNode.data.config.model || ''}
+                    onChange={(e) => updateNodeConfig('model', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    提示词模板
+                  </label>
+                  <textarea
+                    rows={4}
+                    placeholder="Agent的任务描述，支持 {{variable}} 插值"
+                    value={selectedNode.data.config.promptTemplate || ''}
+                    onChange={(e) => updateNodeConfig('promptTemplate', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    输出键名
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="如: agent_output"
+                    value={selectedNode.data.config.outputKey || ''}
+                    onChange={(e) => updateNodeConfig('outputKey', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+              </>
+            )}
+
+            {/* LangChain Memory 节点配置 */}
+            {selectedNode.data.type === 'langchain.memory' && (
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    操作类型
+                  </label>
+                  <select
+                    value={selectedNode.data.config.action || 'save'}
+                    onChange={(e) => updateNodeConfig('action', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  >
+                    <option value="save">保存对话</option>
+                    <option value="load">加载历史</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    记忆键名
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="如: chat_history"
+                    value={selectedNode.data.config.memoryKey || ''}
+                    onChange={(e) => updateNodeConfig('memoryKey', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+
+                {selectedNode.data.config.action === 'save' && (
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        输入键名
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="如: input 或 user_message"
+                        value={selectedNode.data.config.inputKey || ''}
+                        onChange={(e) => updateNodeConfig('inputKey', e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        输出键名
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="如: output 或 ai_response"
+                        value={selectedNode.data.config.outputKey || ''}
+                        onChange={(e) => updateNodeConfig('outputKey', e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      />
+                    </div>
+                  </>
+                )}
               </>
             )}
 

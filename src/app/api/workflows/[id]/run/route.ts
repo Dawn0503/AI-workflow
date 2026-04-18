@@ -80,7 +80,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
     // 202 表示请求已被接受处理，但处理尚未完成
     return NextResponse.json({ runId }, { status: 202 });
     
-  } catch (error: any) {
+  } catch (error: unknown) {
     // 捕获执行过程中的任何错误
     // 可能的错误：
     // - 工作流不存在
@@ -90,7 +90,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
     
     // 返回错误信息，状态码 500 (Internal Server Error)
     return NextResponse.json(
-      { error: String(error?.message ?? error) },  // 提取错误消息
+      { error: String(error instanceof Error ? error.message : String(error)) },  // 提取错误消息
       { status: 500 }
     );
   }

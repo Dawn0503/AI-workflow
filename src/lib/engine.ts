@@ -13,6 +13,12 @@ import { prisma } from "@/lib/prisma";  // 数据库客户端
 import { getOpenAIClient } from "@/lib/openai";  // OpenAI 客户端
 import { ExecutionContext, interpolateTemplate, setByPath } from "@/lib/utils/interpolate";  // 模板插值工具
 import { Prisma } from "@prisma/client";  // Prisma 类型
+// LangChain 集成
+import { 
+  langchainChainOperator, 
+  langchainAgentOperator, 
+  langchainMemoryOperator 
+} from "@/lib/langchain";  // LangChain 节点操作器
 
 // ==========================================
 // 类型定义
@@ -289,6 +295,70 @@ operatorRegistry.register("http.request", async ({ node, context }) => {
     } 
   };
 });
+
+// ==========================================
+// LangChain 节点操作器注册
+// ==========================================
+
+/**
+ * LangChain Chain 节点 (langchain.chain)
+ * 作用：使用 LangChain 的顺序链执行 AI 任务
+ * 
+ * 配置项：
+ * - model: 模型名称（默认 "gpt-4o-mini"）
+ * - temperature: 温度参数（默认 0.2）
+ * - promptTemplate: 提示词模板，支持 {{variable}} 插值
+ * - systemTemplate: 系统提示词模板（可选）
+ * - outputKey: 输出结果保存的键名（默认 "chain_output"）
+ * 
+ * 示例配置：
+ * {
+ *   "model": "gpt-4o-mini",
+ *   "promptTemplate": "请总结以下文本：{{text}}",
+ *   "outputKey": "summary"
+ * }
+ */
+operatorRegistry.register("langchain.chain", langchainChainOperator);
+
+/**
+ * LangChain Agent 节点 (langchain.agent)
+ * 作用：使用 LangChain Agent 进行推理和工具调用
+ * 
+ * 配置项：
+ * - model: 模型名称（默认 "gpt-4o-mini"）
+ * - temperature: 温度参数（默认 0.2）
+ * - promptTemplate: Agent 的提示词模板
+ * - maxIterations: 最大迭代次数（默认 5）
+ * - outputKey: 输出结果保存的键名（默认 "agent_output"）
+ * 
+ * 示例配置：
+ * {
+ *   "model": "gpt-4o-mini",
+ *   "promptTemplate": "使用工具回答：{{question}}",
+ *   "outputKey": "answer"
+ * }
+ */
+operatorRegistry.register("langchain.agent", langchainAgentOperator);
+
+/**
+ * LangChain Memory 节点 (langchain.memory)
+ * 作用：保存和恢复对话历史
+ * 
+ * 配置项：
+ * - action: 操作类型（"save" 或 "load"）
+ * - memoryKey: 记忆键名（默认 "chat_history"）
+ * - inputKey: 输入键名（默认 "input"）
+ * - outputKey: 输出键名（默认 "output"）
+ * 
+ * 示例配置：
+ * {
+ *   "action": "save",
+ *   "memoryKey": "history",
+ *   "inputKey": "user_message",
+ *   "outputKey": "ai_response"
+ * }
+ */
+operatorRegistry.register("langchain.memory", langchainMemoryOperator);
 
 // ==========================================
 // 拓扑排序算法

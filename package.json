@@ -9,8 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@langchain/core": "^1.1.15",
+    "@langchain/openai": "^1.2.2",
     "@prisma/client": "^6.16.2",
     "@xyflow/react": "^12.8.5",
+    "langchain": "^1.2.10",
     "next": "15.5.4",
     "openai": "^5.23.0",
     "react": "19.1.0",

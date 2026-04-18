@@ -10,15 +10,15 @@ import { NextResponse } from "next/server";
 // 导入数据库客户端
 import { prisma } from "@/lib/prisma";
 
-// 定义路由参数类型
-type Params = { params: { id: string } };
+// 定义路由参数类型（Next.js 15 中 params 是 Promise）
+type Params = { params: Promise<{ id: string }> };
 
 /**
  * GET /api/runs/:id
  * 作用：获取指定运行记录的详细信息
  * 
  * @param _req - HTTP 请求对象（未使用，用下划线标记）
- * @param params - 路由参数对象，包含运行记录 ID
+ * @param ctx - 路由上下文，包含运行记录 ID（Promise）
  * @returns 运行记录的完整信息，包含步骤和工作流数据
  * 
  * 查询逻辑：
@@ -65,10 +65,13 @@ type Params = { params: { id: string } };
  * - 200 OK: 成功返回运行记录
  * - 404 Not Found: 运行记录不存在
  */
-export async function GET(_req: Request, { params }: Params) {
+export async function GET(_req: Request, ctx: Params) {
+  // Next.js 15 中 params 是 Promise，需要 await
+  const { id } = await ctx.params;
+  
   // 从数据库查询运行记录
   const run = await prisma.run.findUnique({
-    where: { id: params.id },  // 根据 ID 查询
+    where: { id },  // 根据 ID 查询
     include: { 
       // 包含所有执行步骤
       steps: { 
